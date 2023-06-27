@@ -37,6 +37,44 @@ class _UserController extends BaseController {
       next(this.getManagedError(e));
     }
   }
+
+  async forgetPassword(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction,
+  ) {
+    try {
+      const { email } = req.body;
+
+      const result = await UserRepository.forgetPassword(email);
+
+      if (!result) {
+        throw new AppError("User not found");
+      }
+
+      return this.success(req, res)(result);
+    } catch (e) {
+      next(this.getManagedError(e));
+    }
+  }
+
+  async activateAccount(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction,
+  ) {
+    try {
+      const { token } = req.query;
+      const result = await UserRepository.activateAccount(token as string);
+      if (!result) {
+        throw new AppError("User not found");
+      }
+
+      return this.success(req, res)(result);
+    } catch (e) {
+      next(this.getManagedError(e));
+    }
+  }
 }
 
 const UserController = new _UserController("USER_CONTROLLER");

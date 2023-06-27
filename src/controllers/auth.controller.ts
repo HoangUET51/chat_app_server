@@ -24,7 +24,7 @@ class _AuthController extends BaseController {
       const token = sign(
         {
           email: user.email,
-          fullname: user.fullName,
+          fullName: user.fullName,
           avatar: user?.avatar,
           address: user.address,
           gender: user.gender,
@@ -38,7 +38,7 @@ class _AuthController extends BaseController {
         accessToken: token,
         user: {
           email: user.email,
-          fullname: user.fullName,
+          fullName: user.fullName,
           avatar: user?.avatar,
           address: user.address,
           gender: user.gender,
