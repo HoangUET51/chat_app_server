@@ -13,7 +13,7 @@ export function authenticateJwt(
   if (authHeader) {
     const token = authHeader.split(/\s/)[1];
 
-    Jwt.verify(token, process.env.JWT_SECRET_KEY || "", (err, user) => {
+    Jwt.verify(token, process.env.TOKEN_KEY || "", (err, user) => {
       if (err) {
         return handleUnauthorized(req, res);
       }

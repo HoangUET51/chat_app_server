@@ -1,12 +1,14 @@
-import { User, Users } from "@/entities/user";
+import { Users } from "@/entities/user";
+import { hashPassword } from "@/helpers/user.helper";
 import { UserModel } from "@/models/user.model";
-import uuid from "uuid";
 class _UserRepository {
+  async getUser(email: string) {
+    return Users.findOne({ email });
+  }
+
   async createOrEdit(user: UserModel) {
     try {
-      const checkedUser = await Users.findOne({ _id: user._id });
-
-      if (checkedUser) {
+      if (user._id) {
         return Users.updateOne(
           { _id: user._id },
           {
@@ -18,16 +20,18 @@ class _UserRepository {
           },
         );
       } else {
-        const newUser = new User();
-        newUser._id = uuid.v4();
-        newUser.fullName = user.fullName;
-        newUser.email = user.email;
-        newUser.password = user.password;
-        newUser.phone = user.phone;
-        newUser.gender = user.gender;
-        newUser.address = user.address;
-        newUser.avatar = user.avatar;
-        return Users.create(newUser);
+        const hassPassword = hashPassword(user.password);
+        const newUser = new Users({
+          fullName: user.fullName,
+          email: user.email,
+          password: hassPassword,
+          address: user.address,
+          phone: user.phone,
+          gender: user.gender,
+          avatar: user?.avatar ?? null,
+        });
+        const result = await newUser.save();
+        return result;
       }
     } catch (error) {
       return null;
