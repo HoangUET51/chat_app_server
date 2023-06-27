@@ -3,6 +3,24 @@ import { AppError } from "@/models";
 import UserRepository from "@/repositories/user.repository";
 import express from "express";
 class _UserController extends BaseController {
+  async getUser(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction,
+  ) {
+    try {
+      const { email } = req.body;
+      console.log(req.body.user);
+      const result = await UserRepository.getUser(email);
+      if (!result) {
+        throw new AppError("User not found");
+      }
+      return this.success(req, res)(result);
+    } catch (e) {
+      next(this.getManagedError(e));
+    }
+  }
+
   async createOrEdit(
     req: express.Request,
     res: express.Response,

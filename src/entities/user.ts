@@ -13,7 +13,6 @@ export class User {
 
 const userSchema = new mongoose.Schema(
   {
-    _id: { type: String, required: true, unique: true, min: 1 },
     fullName: { type: String, required: true, minLength: 3, maxLength: 30 },
     email: {
       type: String,
@@ -22,7 +21,7 @@ const userSchema = new mongoose.Schema(
       maxLength: 200,
       unique: true,
     },
-    password: { type: String, required: true, minLength: 1024 },
+    password: { type: String, required: true, maxLength: 1024 },
     address: { type: String, required: true },
     phone: {
       type: String,
@@ -40,41 +39,3 @@ const userSchema = new mongoose.Schema(
 );
 
 export const Users = mongoose.model("User", userSchema);
-
-// class UserSchemas {
-//   userSchemas() {
-//     return new mongoose.Schema(
-//       {
-//         _id: { type: String, required: true, unique: true, min: 1 },
-//         fullName: { type: String, required: true, minLength: 3, maxLength: 30 },
-//         email: {
-//           type: String,
-//           required: true,
-//           minLength: 3,
-//           maxLength: 200,
-//           unique: true,
-//         },
-//         password: { type: String, required: true, minLength: 1024 },
-//         address: { type: String, required: true },
-//         phone: {
-//           type: String,
-//           required: true,
-//           unique: true,
-//           minLength: 10,
-//           maxLength: 10,
-//         },
-//         gender: { type: String, required: true },
-//         avatar: { type: String },
-//       },
-//       {
-//         timestamps: true,
-//       },
-//     );
-//   }
-// }
-
-// const userSchemas = new UserSchemas();
-
-// const userModel = mongoose.model("User", userSchemas.userSchemas());
-
-// export default userModel;

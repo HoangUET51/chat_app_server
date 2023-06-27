@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import path from "path";
-import { MongoClient } from "mongodb";
+import mongoose from "mongoose";
 import LogHelper from "./helpers/log.helper";
 
 const initEnvironments = (): void => {
@@ -18,16 +18,12 @@ const initEnvironments = (): void => {
 
 const initMongooseConnection = async () => {
   const URI = process.env.ATLAS_URI || "";
-  const mongoClient = new MongoClient(URI);
-
   try {
     LogHelper.logInfo("Connecting to MongoDB Atlas cluster...");
-    await mongoClient.connect();
+    await mongoose.connect(URI);
     LogHelper.logInfo("Database connected");
   } catch (error) {
     console.error("Connection to MongoDB Atlas failed!", error);
-  } finally {
-    await mongoClient.close();
   }
 };
 
