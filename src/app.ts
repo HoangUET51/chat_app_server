@@ -8,10 +8,14 @@ import { handleAppError, handleError } from "./middlewares/error.middleware";
 import { Server } from "socket.io";
 import sockets from "./socket/index.socket";
 import { initEnvironments, initMongooseConnection } from "./app.init";
+import path from "path";
 
 const app = express();
 initEnvironments();
 app.use(cors());
+app.use("/public", express.static(path.join(__dirname, "../public")));
+app.use(express.urlencoded({ extended: true, limit: "50mb" }));
+app.use(express.json({ limit: "50mb" }));
 app.use(express.json());
 app.use("/api", routes);
 app.use(

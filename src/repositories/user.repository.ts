@@ -81,7 +81,6 @@ class _UserRepository {
       const result = await newUser.save();
       return result;
     } catch (error) {
-      console.log(error);
       return null;
     }
   }
