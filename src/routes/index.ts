@@ -2,6 +2,7 @@ import express from "express";
 import authRoute from "./auth.route";
 import userRoute from "./user.route";
 import updateFileRouter from "./updateFile.route";
+import chatRoomRoute from "./chatRoom.route";
 import AuthController from "@/controllers/auth.controller";
 import UserController from "@/controllers/user.controller";
 
@@ -15,5 +16,6 @@ router.get("/activate", activateAccount);
 router.use("/auth", authRoute);
 router.use("/user", userRoute);
 router.use("/update-avatar", updateFileRouter);
+router.use("/chat", chatRoomRoute);
 
 export default router;
