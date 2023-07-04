@@ -4,8 +4,10 @@ import express from "express";
 
 const router = express.Router();
 
-const { createChatRoom } = ChatRoomController;
+const { createChatRoom, findUserChatRooms, findChatRooms } = ChatRoomController;
 
 router.post("/", authenticateJwt, createChatRoom);
+router.get("/user-chat-room/:userId", authenticateJwt, findUserChatRooms);
+router.get("/chat-room", authenticateJwt, findChatRooms);
 
 export default router;

@@ -4,7 +4,7 @@ class _ChatRoomRepository {
   async createChatRoom(userIds: number[]) {
     try {
       const availableRoom = await ChatRooms.findOne({
-        userIds: { $all: userIds },
+        userIds,
       });
 
       if (availableRoom) {
@@ -23,7 +23,7 @@ class _ChatRoomRepository {
     }
   }
 
-  async findUserChatRooms(userId: number) {
+  async findUserChatRooms(userId: number | string) {
     try {
       const chatRooms = await ChatRooms.find({
         userIds: {

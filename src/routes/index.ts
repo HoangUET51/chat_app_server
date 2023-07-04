@@ -3,6 +3,7 @@ import authRoute from "./auth.route";
 import userRoute from "./user.route";
 import updateFileRouter from "./updateFile.route";
 import chatRoomRoute from "./chatRoom.route";
+import messageRoute from "./message.route";
 import AuthController from "@/controllers/auth.controller";
 import UserController from "@/controllers/user.controller";
 
@@ -17,5 +18,6 @@ router.use("/auth", authRoute);
 router.use("/user", userRoute);
 router.use("/update-avatar", updateFileRouter);
 router.use("/chat", chatRoomRoute);
+router.use("/message", messageRoute);
 
 export default router;
