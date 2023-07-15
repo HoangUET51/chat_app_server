@@ -37,6 +37,7 @@ class _AuthController extends BaseController {
       const userModel = {
         accessToken: token,
         user: {
+          id: user._id,
           email: user.email,
           fullName: user.fullName,
           avatar: user?.avatar,

@@ -47,7 +47,6 @@ class _ChatRoomController extends BaseController {
       const { userIds } = req.body;
       const result = await ChatRoomRepository.findChatRooms(userIds);
 
-      console.log(result);
       if (!result) {
         throw new AppError("Chat room not found");
       }
