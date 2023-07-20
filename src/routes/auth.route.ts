@@ -1,10 +1,11 @@
 import AuthController from "@/controllers/auth.controller";
+import { authenticateJwt } from "@/middlewares/auth.middleware";
 import express from "express";
 
 const router = express.Router();
 
-const { login } = AuthController;
+const { authValidate } = AuthController;
 
-router.post("/login", login);
+router.post("/validate", authenticateJwt, authValidate);
 
 export default router;

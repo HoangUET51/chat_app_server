@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { BaseController } from "../base";
 import { Users } from "@/entities/user";
 import { checkPassword } from "@/helpers/user.helper";
-import { sign } from "jsonwebtoken";
+import { sign, verify } from "jsonwebtoken";
 import { AppError } from "@/models";
 
 class _AuthController extends BaseController {
@@ -36,6 +36,50 @@ class _AuthController extends BaseController {
 
       const userModel = {
         accessToken: token,
+        user: {
+          id: user._id,
+          email: user.email,
+          fullName: user.fullName,
+          avatar: user?.avatar,
+          address: user.address,
+          gender: user.gender,
+          phone: user.phone,
+        },
+      };
+
+      this.success(req, res)(userModel);
+    } catch (e) {
+      next(this.getManagedError(e));
+    }
+  }
+
+  async authValidate(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { token } = req.query;
+      if (!token) return;
+
+      const user = (await verify(
+        <any>token,
+        process.env.TOKEN_KEY ?? "",
+      )) as any;
+
+      if (!user) return;
+
+      const newToken = sign(
+        {
+          email: user.email,
+          fullName: user.fullName,
+          avatar: user?.avatar,
+          address: user.address,
+          gender: user.gender,
+          phone: user.phone,
+        },
+        `${process.env.TOKEN_KEY}`,
+        { expiresIn: "1d" },
+      );
+
+      const userModel = {
+        accessToken: newToken,
         user: {
           id: user._id,
           email: user.email,
